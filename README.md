@@ -70,3 +70,43 @@ export const PrimarySubscription = () => (
 	</>
 );
 ```
+
+## decorator
+
+```js
+import React from "react";
+import "./Center.css";
+
+const Center = (props) => {
+	return <div className='center'>{props.children}</div>;
+};
+
+export default Center;
+```
+
+스토리북의 스토리들의 레이아웃이나 중앙에 정렬하고 싶을 때
+
+일일히 씌우기보다 storybook의 decorator 옵션을 사용한다.
+
+```js
+export default {
+	title: "Form/Button",
+	component: Button,
+	decorators: [(story) => <Center>{story()}</Center>],
+	// 배열에 콜백함수를 넣어서 표현한다.
+	args: {
+		children: "Button",
+	},
+};
+```
+
+이렇게 스토리파일마다 작성해주는 방법이 있고 전체 프리뷰에 적용할 수도 있다.
+
+```js
+// .storybook/preview.js
+import React from "react";
+import { addDecorator } from "@storybook/react";
+import Center from "../src/components/Center/Center";
+
+addDecorator((story) => <Center>{story()}</Center>);
+```
